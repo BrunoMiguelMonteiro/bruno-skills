@@ -1,0 +1,10 @@
+{
+  "name": "lean-writer",
+  "version": "1.0.0",
+  "description": "Reescreve documentos eliminando desperdício, redundância e verbosidade",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

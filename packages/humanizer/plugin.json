@@ -1,0 +1,10 @@
+{
+  "name": "humanizer",
+  "version": "1.0.0",
+  "description": "Systematically removes AI writing patterns from text",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

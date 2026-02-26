@@ -1,0 +1,10 @@
+{
+  "name": "claude-md-auditor",
+  "version": "1.0.0",
+  "description": "Audita ficheiros CLAUDE.md para detetar gaps, contradições e violações de best practices",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

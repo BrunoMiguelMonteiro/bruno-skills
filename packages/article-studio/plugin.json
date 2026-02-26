@@ -1,0 +1,10 @@
+{
+  "name": "article-studio",
+  "version": "1.0.0",
+  "description": "Collaborative long-form article writing assistant for authentic, human-sounding articles",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "context-engineering-assistant",
+  "version": "1.0.0",
+  "description": "Analisa projetos e implementa sistemas de context engineering personalizados",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

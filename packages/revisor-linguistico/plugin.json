@@ -1,0 +1,10 @@
+{
+  "name": "revisor-linguistico",
+  "version": "1.0.0",
+  "description": "Revisão linguística em Português (Portugal) — 6 níveis de análise",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

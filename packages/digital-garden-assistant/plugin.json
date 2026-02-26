@@ -1,0 +1,10 @@
+{
+  "name": "digital-garden-assistant",
+  "version": "1.0.0",
+  "description": "Creates atomic Zettelkasten notes from sources following Ahrens & Doto principles",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "bruno-skills",
+  "description": "Skills pessoais de Bruno Monteiro",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "repository": "https://github.com/BrunoMiguelMonteiro/bruno-skills",
+  "plugins": [
+    { "name": "revisor-linguistico", "path": "packages/revisor-linguistico" },
+    { "name": "article-studio", "path": "packages/article-studio" },
+    { "name": "lean-writer", "path": "packages/lean-writer" },
+    { "name": "humanizer", "path": "packages/humanizer" },
+    { "name": "digital-garden-assistant", "path": "packages/digital-garden-assistant" },
+    { "name": "context-engineering-assistant", "path": "packages/context-engineering-assistant" },
+    { "name": "context-optimizer", "path": "packages/context-optimizer" },
+    { "name": "claude-md-auditor", "path": "packages/claude-md-auditor" },
+    { "name": "research-editor", "path": "packages/research-editor" }
+  ]
+}

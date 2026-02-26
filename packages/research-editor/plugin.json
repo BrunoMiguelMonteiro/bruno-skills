@@ -1,0 +1,10 @@
+{
+  "name": "research-editor",
+  "version": "1.0.0",
+  "description": "Editor de investigação rigoroso para artigos — verifica dados, fortalece argumentação",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

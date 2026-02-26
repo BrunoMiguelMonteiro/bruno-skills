@@ -1,0 +1,10 @@
+{
+  "name": "context-optimizer",
+  "version": "1.0.0",
+  "description": "Audits and optimizes Claude Code context configuration",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}
