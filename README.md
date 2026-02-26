@@ -10,20 +10,24 @@ bash <(curl -s https://raw.githubusercontent.com/BrunoMiguelMonteiro/bruno-skill
 ```
 
 ### Install individual skills
-```bash
+
+Run these slash commands inside Claude Code:
+
+```
 # Add marketplace first
-claude /marketplace add https://github.com/BrunoMiguelMonteiro/bruno-skills
+/plugin marketplace add BrunoMiguelMonteiro/bruno-skills
 
 # Then install what you need
-claude /plugin install revisor-linguistico@bruno-skills
-claude /plugin install article-studio@bruno-skills
-claude /plugin install lean-writer@bruno-skills
-claude /plugin install humanizer@bruno-skills
-claude /plugin install digital-garden-assistant@bruno-skills
-claude /plugin install context-engineering-assistant@bruno-skills
-claude /plugin install context-optimizer@bruno-skills
-claude /plugin install claude-md-auditor@bruno-skills
-claude /plugin install research-editor@bruno-skills
+/plugin install revisor-linguistico@bruno-skills
+/plugin install article-studio@bruno-skills
+/plugin install lean-writer@bruno-skills
+/plugin install humanizer@bruno-skills
+/plugin install digital-garden-assistant@bruno-skills
+/plugin install context-engineering-assistant@bruno-skills
+/plugin install context-optimizer@bruno-skills
+/plugin install claude-md-auditor@bruno-skills
+/plugin install research-editor@bruno-skills
+/plugin install obsidian-add-book@bruno-skills
 ```
 
 ## Skills
@@ -39,11 +43,12 @@ claude /plugin install research-editor@bruno-skills
 | `context-optimizer` | PT | Audits and optimizes Claude Code context configuration |
 | `claude-md-auditor` | PT | Audits CLAUDE.md files for gaps and contradictions |
 | `research-editor` | PT | Research editor for long-form articles |
+| `obsidian-add-book` | PT | Adiciona livros ao vault Obsidian via URL (Goodreads/Wook) |
 
 ## Update
 
-```bash
-claude /plugin update [skill-name]@bruno-skills
+```
+/plugin marketplace update bruno-skills
 ```
 
 ## License
