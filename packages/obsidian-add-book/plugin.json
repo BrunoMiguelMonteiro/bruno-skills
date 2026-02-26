@@ -1,0 +1,10 @@
+{
+  "name": "obsidian-add-book",
+  "version": "1.0.0",
+  "description": "Adicionar livros ao vault do Obsidian via URL (Goodreads/Wook) com auto-preenchimento de metadados",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}
