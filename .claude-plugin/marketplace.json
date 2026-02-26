@@ -1,0 +1,76 @@
+{
+  "name": "bruno-skills",
+  "owner": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "metadata": {
+    "description": "Skills pessoais de Bruno Monteiro para escrita, revisão linguística e context engineering",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "revisor-linguistico",
+      "description": "Revisão linguística em Português (Portugal) — 6 níveis de análise",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/revisor-linguistico/skills/revisor-linguistico"]
+    },
+    {
+      "name": "article-studio",
+      "description": "Collaborative long-form article writing assistant for authentic, human-sounding articles",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/article-studio/skills/article-studio"]
+    },
+    {
+      "name": "lean-writer",
+      "description": "Reescreve documentos eliminando desperdício, redundância e verbosidade",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/lean-writer/skills/lean-writer"]
+    },
+    {
+      "name": "humanizer",
+      "description": "Systematically removes AI writing patterns from text",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/humanizer/skills/humanizer"]
+    },
+    {
+      "name": "digital-garden-assistant",
+      "description": "Creates atomic Zettelkasten notes from sources following Ahrens & Doto principles",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/digital-garden-assistant/skills/digital-garden-assistant"]
+    },
+    {
+      "name": "context-engineering-assistant",
+      "description": "Analisa projetos e implementa sistemas de context engineering personalizados",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/context-engineering-assistant/skills/context-engineering-assistant"]
+    },
+    {
+      "name": "context-optimizer",
+      "description": "Audits and optimizes Claude Code context configuration",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/context-optimizer/skills/context-optimizer"]
+    },
+    {
+      "name": "claude-md-auditor",
+      "description": "Audita ficheiros CLAUDE.md para detetar gaps, contradições e violações de best practices",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/claude-md-auditor/skills/claude-md-auditor"]
+    },
+    {
+      "name": "research-editor",
+      "description": "Editor de investigação rigoroso para artigos — verifica dados, fortalece argumentação",
+      "source": "./",
+      "strict": false,
+      "skills": ["./packages/research-editor/skills/research-editor"]
+    }
+  ]
+}
