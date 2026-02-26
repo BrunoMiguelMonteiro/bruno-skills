@@ -5,15 +5,15 @@
     "url": "https://workingbruno.com"
   },
   "plugins": [
-    { "name": "revisor-linguistico", "source": "../packages/revisor-linguistico" },
-    { "name": "article-studio", "source": "../packages/article-studio" },
-    { "name": "lean-writer", "source": "../packages/lean-writer" },
-    { "name": "humanizer", "source": "../packages/humanizer" },
-    { "name": "digital-garden-assistant", "source": "../packages/digital-garden-assistant" },
-    { "name": "context-engineering-assistant", "source": "../packages/context-engineering-assistant" },
-    { "name": "context-optimizer", "source": "../packages/context-optimizer" },
-    { "name": "claude-md-auditor", "source": "../packages/claude-md-auditor" },
-    { "name": "research-editor", "source": "../packages/research-editor" },
-    { "name": "obsidian-add-book", "source": "../packages/obsidian-add-book" }
+    { "name": "revisor-linguistico", "source": "./packages/revisor-linguistico" },
+    { "name": "article-studio", "source": "./packages/article-studio" },
+    { "name": "lean-writer", "source": "./packages/lean-writer" },
+    { "name": "humanizer", "source": "./packages/humanizer" },
+    { "name": "digital-garden-assistant", "source": "./packages/digital-garden-assistant" },
+    { "name": "context-engineering-assistant", "source": "./packages/context-engineering-assistant" },
+    { "name": "context-optimizer", "source": "./packages/context-optimizer" },
+    { "name": "claude-md-auditor", "source": "./packages/claude-md-auditor" },
+    { "name": "research-editor", "source": "./packages/research-editor" },
+    { "name": "obsidian-add-book", "source": "./packages/obsidian-add-book" }
   ]
 }
