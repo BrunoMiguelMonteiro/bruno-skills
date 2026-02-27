@@ -1,0 +1,10 @@
+{
+  "name": "figma-audit-analyze",
+  "version": "1.0.0",
+  "description": "Analyzes a myFCT Figma file for UI pattern and microcopy inconsistencies using frame sampling",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

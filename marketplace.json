@@ -16,6 +16,9 @@
     { "name": "context-optimizer", "path": "packages/context-optimizer" },
     { "name": "claude-md-auditor", "path": "packages/claude-md-auditor" },
     { "name": "research-editor", "path": "packages/research-editor" },
-    { "name": "obsidian-add-book", "path": "packages/obsidian-add-book" }
+    { "name": "obsidian-add-book", "path": "packages/obsidian-add-book" },
+    { "name": "figma-audit-setup", "path": "packages/figma-audit-setup" },
+    { "name": "figma-audit-analyze", "path": "packages/figma-audit-analyze" },
+    { "name": "figma-audit-report", "path": "packages/figma-audit-report" }
   ]
 }

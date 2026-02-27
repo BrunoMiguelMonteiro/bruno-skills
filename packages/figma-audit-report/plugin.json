@@ -1,0 +1,10 @@
+{
+  "name": "figma-audit-report",
+  "version": "1.0.0",
+  "description": "Generates the final myFCT Figma audit report — Markdown summary and annotated Figma page",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

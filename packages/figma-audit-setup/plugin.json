@@ -1,0 +1,10 @@
+{
+  "name": "figma-audit-setup",
+  "version": "1.0.0",
+  "description": "Defines scope for a myFCT Figma design audit — lists pages, excludes old versions, writes config file",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}
