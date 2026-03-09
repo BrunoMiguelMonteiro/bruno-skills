@@ -1,0 +1,10 @@
+{
+  "name": "astro-content-add",
+  "version": "1.0.0",
+  "description": "Add content to the workingbruno Astro site — books, notes, links, and portfolio work",
+  "author": {
+    "name": "Bruno Monteiro",
+    "url": "https://workingbruno.com"
+  },
+  "license": "MIT"
+}

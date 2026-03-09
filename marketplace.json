@@ -19,6 +19,7 @@
     { "name": "obsidian-add-book", "path": "packages/obsidian-add-book" },
     { "name": "figma-audit-setup", "path": "packages/figma-audit-setup" },
     { "name": "figma-audit-analyze", "path": "packages/figma-audit-analyze" },
-    { "name": "figma-audit-report", "path": "packages/figma-audit-report" }
+    { "name": "figma-audit-report", "path": "packages/figma-audit-report" },
+    { "name": "astro-content-add", "path": "packages/astro-content-add" }
   ]
 }
