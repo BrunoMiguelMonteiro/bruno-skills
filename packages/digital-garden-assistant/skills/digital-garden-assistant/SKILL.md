@@ -1,6 +1,6 @@
 ---
 name: digital-garden-assistant
-description: Create atomic Zettelkasten notes from sources (text, web, PDF, docs) following Ahrens & Doto principles
+description: Create atomic Zettelkasten notes from sources (text, web, PDF, docs) following Ahrens & Doto principles. Detects existing concepts and updates them instead of creating duplicates.
 argument-hint: [source-text|url|file-path]
 allowed-tools:
   - AskUserQuestion
@@ -11,13 +11,17 @@ allowed-tools:
   - Glob
   - WebFetch
   - Skill(document-skills:*)
+  - mcp__qmd__vsearch
+  - mcp__qmd__query
+  - mcp__qmd__get
+  - mcp__qmd__search
 ---
 
 # Digital Garden Assistant
 
 ## Overview
 
-Transform source material (text, web pages, PDFs, Word documents) into atomic Zettelkasten notes for an Obsidian digital garden. Extract core concepts, create properly structured markdown notes in English, and suggest connections to existing vault notes following Sönke Ahrens' and Bob Doto's Zettelkasten principles.
+Transform source material (text, web pages, PDFs, Word documents) into atomic Zettelkasten notes for an Obsidian digital garden. Extract core concepts, detect existing vault notes that cover the same concept, and either create new seedling notes or enrich existing ones — following Sönke Ahrens' and Bob Doto's Zettelkasten principles.
 
 ## Core capabilities
 
@@ -38,7 +42,7 @@ For each source, analyze to:
 
 ### 2. Atomic note creation
 
-Create notes following Zettelkasten principles (see `references/zettelkasten_principles.md` for detailed guidance):
+Create notes following Zettelkasten principles:
 
 **Note structure:**
 - One concept per note
@@ -55,156 +59,194 @@ Create notes following Zettelkasten principles (see `references/zettelkasten_pri
 
 **Starting status:**
 - New notes from source material → `status: seedling`
-- User can promote to budding/evergreen manually later
+- User promotes to budding/evergreen manually later
 
-### 3. Vault integration
+**Frontmatter template:**
+```yaml
+---
+title: "Concept Name"
+created: YYYY-MM-DD
+edited: YYYY-MM-DD
+status: seedling
+tags: [tag1, tag2]
+publish: false
+source: "https://source-url.com"
+---
+```
 
-**Vault location:**
-- Ask user for vault path on first use
-- Store in skill state for subsequent sessions
-- Default suggestion: `~/Documents/ObsidianVault/`
+### 3. Vault location
 
-**Related note discovery:**
-- Search vault using Grep tool for related concepts
-- Match by title keywords, tags, and content
-- Suggest wikilinks to related notes
-- Format: `[[Note Title]]`
+Vault is at: `/Users/bruno/Library/Mobile Documents/iCloud~md~obsidian/Documents/Garden`
 
-**Note placement:**
-- Notes go in vault root or user-specified subdirectory
-- Filename: `concept-name.md` (kebab-case from title)
-- Include frontmatter from `assets/note_template.md`
+Notes go in category subfolders:
+- `ai-systems/` — ML architectures, LLMs, technical AI concepts
+- `interaction-design/` — HCI, UX, interface paradigms
+- `computing-history/` — History and philosophy of computing
+- `people/` — Thinkers (only when 3+ concepts in vault)
+- `design/` — Design concepts and systems
+- `psychology/` — Cognitive science, mental models
+- `society/` — Social concepts, culture
+- `art/` — Art concepts and theory
+- `photography/` — Photography techniques
 
-### 4. Interactive workflow
+---
 
-**Step 1: Receive source**
-- User provides text, URL, file path, or document
-- Confirm source type and proceed with appropriate tool
+## Interactive workflow (7 steps)
 
-**Step 2: Analyze and extract**
-- Read/fetch source material
-- Identify 2-5 atomic concepts
-- Present concepts as bullet list for user review
+### Step 1: Receive source
 
-**Step 3: Confirm concepts**
-- Show extracted concepts
-- Ask: "These are the core concepts I identified. Which ones should become notes?"
-- User can approve all, select subset, or request different extraction
+User provides text, URL, file path, or document. Confirm source type and read/fetch content with the appropriate tool.
 
-**Step 4: Search related notes**
-- For each approved concept, search vault
-- Find notes with related keywords/topics
-- Present findings: "Found 3 related notes: [[A]], [[B]], [[C]]"
+### Step 2: Analyze and extract
 
-**Step 5: Generate notes**
-- For each concept, create note using template
-- Include suggested wikilinks
-- Write in English, user's own words (rephrased)
-- Add source attribution in frontmatter
-
-**Step 6: Write to vault**
-- Create markdown files in vault
-- Confirm: "Created 3 notes: concept-a.md, concept-b.md, concept-c.md"
-- Provide file paths for user review
-
-## Workflow example
+Read/fetch source material. Identify 2-5 atomic concepts. Present as bullet list for user review:
 
 ```
-User: "Help me extract concepts from this article: https://example.com/article"
+Identified concepts:
+1. **Time Blocking** — scheduling specific time periods for focused work
+2. **Attention Residue** — mental cost of switching between tasks
+3. **Deep Work** — sustained distraction-free concentration
 
-Assistant: [Uses WebFetch tool]
-
-Assistant: "I found an article about productivity. Here are the core concepts:
-
-1. **Time Blocking** - Scheduling specific time periods for focused work
-2. **Deep Work** - Sustained periods of distraction-free concentration  
-3. **Attention Residue** - Mental cost of switching between tasks
-
-Which concepts would you like me to turn into notes?"
-
-User: "All three please"
-
-Assistant: [Uses Grep tool to search vault]
-
-Assistant: "Found related notes:
-- Time Blocking: Related to [[Pomodoro Technique]], [[Calendar Management]]
-- Deep Work: Related to [[Flow State]], [[Productivity Systems]]
-- Attention Residue: Related to [[Context Switching]], [[Cognitive Load]]
-
-[Creates 3 notes using template]
-
-Created 3 notes:
-- /vault/time-blocking.md
-- /vault/deep-work.md  
-- /vault/attention-residue.md
-
-All notes are in seedling status and written in English. Review and edit as needed\!"
+Which ones should I process?
 ```
+
+### Step 3: Semantic vault check
+
+For each approved concept, run a semantic search:
+
+```
+mcp__qmd__vsearch: "[concept name]" with limit=5, minScore=0.5
+```
+
+Classify each result by score:
+- **Score ≥ 0.75** → MATCH — concept likely already exists → propose UPDATE
+- **Score 0.50–0.74** → RELATED — suggest as wikilink
+- **Score < 0.50** → ignore
+
+### Step 4: Confirm with user
+
+Present the classification for every concept before doing anything:
+
+```
+Semantic check results:
+
+"Deep Work"
+  ⚠️  MATCH: [[Flow State]] (0.83) — very similar concept exists. Update that note or create new?
+  🔗 RELATED: [[Cognitive Load]] (0.61)
+
+"Attention Residue"
+  ✅ NEW — no overlapping notes found
+  🔗 RELATED: [[Context Switching]] (0.58)
+
+"Time Blocking"
+  ✅ NEW — no overlapping notes found
+```
+
+For each MATCH, ask: update existing note or create a distinct new one?
+
+### Step 5a: CREATE (new concept)
+
+Generate a new seedling note:
+- Use frontmatter template above
+- Set `created` and `edited` to today's date
+- Add wikilinks to all RELATED notes from Step 3
+- Write content in English, rephrased (never copy-paste)
+- Place in correct category subfolder
+
+### Step 5b: UPDATE (existing concept)
+
+For notes flagged as MATCH and confirmed for update:
+1. Read the existing note using `mcp__qmd__get`
+2. Identify what new information the source adds that isn't already covered
+3. Enrich the note body — add new perspective, examples, or connections
+4. Update `edited` field to today's date
+5. Add new wikilinks if relevant
+6. **Never delete existing content** — only add or expand
+7. **Do not change `status`** — user promotes maturity manually
+8. **Do not change `source`** — if the new source is significant, add a `sources` list in frontmatter
+9. If new information contradicts existing content, add a clearly marked note: `> ⚠️ Note: [source] presents a different view — review needed`
+
+### Step 6: Write to vault
+
+Execute all CREATE and UPDATE operations. Confirm:
+
+```
+Done:
+  ✅ Created: ai-systems/attention-residue.md
+  ✅ Created: ai-systems/time-blocking.md
+  ✅ Updated: psychology/flow-state.md (added section on Deep Work)
+```
+
+### Step 7: Lint pass (optional)
+
+After all writes, offer a quick lint check:
+
+> "Run lint check? I'll scan for missing connections between notes touched this session. (yes / skip)"
+
+If yes:
+1. For each note touched this session, run `mcp__qmd__vsearch` with its title
+2. From top-5 results (score ≥ 0.55), identify notes that don't already link to each other
+3. Present concise suggestions:
+
+```
+Lint — suggested connections:
+• [[Attention Residue]] → [[Flow State]] — not yet linked (score: 0.71)
+• [[Time Blocking]] → [[Deep Work]] — not yet linked (score: 0.68)
+
+Add these links? (all / select / skip)
+```
+
+4. For confirmed suggestions, add wikilinks to the relevant notes via Edit.
+
+---
 
 ## Key principles
 
 ### Atomicity over comprehensiveness
 
-Prefer multiple small notes over one comprehensive note. Each concept should stand alone.
+Prefer multiple small notes over one comprehensive note. Each concept must stand alone.
 
-**Example:**
-Instead of creating "Productivity Methods.md" with sections for time blocking, deep work, and attention residue, create three separate notes.
+Instead of "Productivity Methods.md" with three sections, create three separate notes.
 
 ### Rephrasing, not copying
 
-Never copy-paste from source material. Always rephrase in your own words (as if explaining to someone unfamiliar with the topic).
+Never copy-paste from source material. Always rephrase as if explaining to someone unfamiliar with the topic.
 
 **Bad:** "According to the author, deep work is activities performed in a state of distraction-free concentration..."
 
-**Good:** "Deep work means focusing intensely on cognitively demanding tasks without interruptions. This sustained concentration enables higher quality output and faster skill acquisition."
+**Good:** "Deep work means focusing intensely on cognitively demanding tasks without interruptions. Sustained concentration enables higher quality output and faster skill acquisition."
+
+### Update over duplicate
+
+When a MATCH is found, default to updating the existing note. Only create a new note when the concept is genuinely distinct — not just similar in wording.
 
 ### Connection discovery
 
-When searching for related notes, cast a wide net:
-- Search for synonyms and related terms
-- Look in tags, titles, and content
-- Consider conceptual relationships, not just keyword matches
+Cast a wide semantic net when searching. Conceptual relationships matter more than keyword matches. The `mcp__qmd__vsearch` tool handles this; trust scores above 0.55.
 
 ### Progressive development
 
-Remind users that notes evolve:
+Notes evolve over time:
 - Seedling notes are expected to be rough
-- Connections strengthen over time
-- Evergreen status emerges through revision
+- Connections strengthen as the vault grows
+- Evergreen status emerges through deliberate revision
 
 ### Writing quality (Elements of Style)
 
-Apply these principles when creating note content:
+1. **Active voice** — "Research shows X" not "X is shown by research"
+2. **Omit needless words** — "Stable baseline" not "relatively stable baseline level"
+3. **Concrete language** — use specific examples immediately
+4. **Minimize m-dashes** — prefer colons, commas, or parentheses
+5. **Emphatic words at end** — "Adaptation frees attention and energy for new challenges"
 
-1. **Active voice** - "Research shows X" not "X is shown by research"
-2. **Omit needless words** - "Stable baseline" not "relatively stable baseline level"
-3. **Concrete language** - Use specific examples immediately
-4. **Minimize m-dashes** - Prefer colons (:), commas, or parentheses ()
-5. **Emphatic words at end** - "Adaptation frees attention and energy for new challenges"
-
-**Examples for Zettelkasten:**
-
-Bad: "The concept of cognitive load, which was developed by researchers, refers to the amount of information that working memory can hold."
-
-Good: "Cognitive load describes how much information working memory can hold. Researchers developed this concept to understand learning constraints."
-
-The `elements-of-style` plugin (~/.claude/plugins/cache/elements-of-style) provides comprehensive guidance if needed for complex cases.
-
-## Resources
-
-### references/
-
-- `zettelkasten_principles.md` - Comprehensive guide to Zettelkasten methodology following Sönke Ahrens and Bob Doto. Load this to understand note-taking principles, maturity levels, atomicity, and common pitfalls.
-
-### assets/
-
-- `note_template.md` - Markdown template with frontmatter structure for new notes. Use this template when creating notes, replacing {{PLACEHOLDERS}} with actual values.
+---
 
 ## Important notes
 
 - **Always write notes in English**, regardless of source language
-- **Always rephrase** - never copy-paste source text
-- **One concept per note** - resist the urge to combine related ideas
-- **Search vault before creating** - suggest existing related notes
-- **Start as seedling** - user promotes to budding/evergreen later
-- **Include source attribution** - URL, book title, or document name in frontmatter
+- **Always rephrase** — never copy-paste source text
+- **One concept per note** — resist combining related ideas
+- **Semantic check before creating** — use vsearch, not just Grep
+- **Update beats duplicate** — enrich existing notes when concepts overlap
+- **Start as seedling** — user promotes to budding/evergreen later
+- **Include source attribution** — URL, book title, or document name in frontmatter
