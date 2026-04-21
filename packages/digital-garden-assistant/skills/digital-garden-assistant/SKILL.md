@@ -23,6 +23,8 @@ allowed-tools:
 
 Transform source material (text, web pages, PDFs, Word documents) into atomic Zettelkasten notes for an Obsidian digital garden. Extract core concepts, detect existing vault notes that cover the same concept, and either create new seedling notes or enrich existing ones — following Sönke Ahrens' and Bob Doto's Zettelkasten principles.
 
+See `references/zettelkasten_principles.md` for detailed methodology guidance.
+
 ## Core capabilities
 
 ### 1. Source material analysis
@@ -61,22 +63,11 @@ Create notes following Zettelkasten principles:
 - New notes from source material → `status: seedling`
 - User promotes to budding/evergreen manually later
 
-**Frontmatter template:**
-```yaml
----
-title: "Concept Name"
-created: YYYY-MM-DD
-edited: YYYY-MM-DD
-status: seedling
-tags: [tag1, tag2]
-publish: false
-source: "https://source-url.com"
----
-```
+**Note template:** Use `assets/note_template.md` as the base structure for every new note.
 
 ### 3. Vault location
 
-Vault is at: `/Users/bruno/Library/Mobile Documents/iCloud~md~obsidian/Documents/Garden`
+Vault is at: `/Users/brunomonteiro/Library/Mobile Documents/iCloud~md~obsidian/Documents/Garden`
 
 Notes go in category subfolders:
 - `ai-systems/` — ML architectures, LLMs, technical AI concepts
@@ -146,11 +137,13 @@ For each MATCH, ask: update existing note or create a distinct new one?
 
 ### Step 5a: CREATE (new concept)
 
-Generate a new seedling note:
-- Use frontmatter template above
-- Set `created` and `edited` to today's date
-- Add wikilinks to all RELATED notes from Step 3
-- Write content in English, rephrased (never copy-paste)
+Generate a new seedling note using `assets/note_template.md` as base structure:
+- Fill frontmatter: `created` and `edited` = today's date, `status: seedling`, `publish: false`
+- Use YAML list format for tags (not inline array)
+- Write body in prose paragraphs — opening definition, then elaboration
+- Embed [[wikilinks]] within prose where the relationship has natural context
+- List remaining related notes under `## Related concepts` with one-sentence descriptions
+- Add `## Questions` if open questions arise naturally
 - Place in correct category subfolder
 
 ### Step 5b: UPDATE (existing concept)
@@ -224,6 +217,8 @@ When a MATCH is found, default to updating the existing note. Only create a new 
 
 Cast a wide semantic net when searching. Conceptual relationships matter more than keyword matches. The `mcp__qmd__vsearch` tool handles this; trust scores above 0.55.
 
+Prefer wikilinks embedded in prose (where the relationship has argument) over links collected only in `## Related concepts`.
+
 ### Progressive development
 
 Notes evolve over time:
@@ -248,5 +243,5 @@ Notes evolve over time:
 - **One concept per note** — resist combining related ideas
 - **Semantic check before creating** — use vsearch, not just Grep
 - **Update beats duplicate** — enrich existing notes when concepts overlap
-- **Start as seedling** — user promotes to budding/evergreen later
+- **Start as seedling** — user promotes to budding/evergreen manually
 - **Include source attribution** — URL, book title, or document name in frontmatter
