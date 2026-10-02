@@ -3,10 +3,12 @@ import type { EngineInterface, Register } from 'claude-code'
 
 import type { Finding, Held } from '../types'
 
-const PANE = 'land-guard'
 const held = atom({ plugin: 'land-guard', key: 'held' } as const, null)
 
 type Api = EngineInterface
+
+// The button's answer. A module variable, as the hook and the press closure share one module.
+let pressed: 'proceed' | 'cancel' | null = null
 
 // Commands that merge a PR or delete a branch or worktree.
 const RISKY =
@@ -105,12 +107,12 @@ function summary(findings: Finding[]) {
   return findings.map(f => `${MARK[f.level]} ${f.label}: ${f.detail}`).join('; ')
 }
 
-function view($: Api, e: Parameters<Api['ui']['resolve']>[0], h: Held) {
+function view($: Api, e: Parameters<Api['ui']['resolve']>[0], cur: Held) {
   const { Box, Text, Button } = $.ui.resolve(e)
   return (
     <Box flexDirection="column" paddingX={1}>
-      <Text bold>Land Guard holds: {h.command.replace(/\s+/g, ' ').slice(0, 100)}</Text>
-      {h.findings.map(f => (
+      <Text bold>Land Guard holds: {cur.command.replace(/\s+/g, ' ').slice(0, 100)}</Text>
+      {cur.findings.map(f => (
         <Text color={COLOR[f.level]}>
           {MARK[f.level]} {f.label}: {f.detail}
         </Text>
@@ -120,13 +122,17 @@ function view($: Api, e: Parameters<Api['ui']['resolve']>[0], h: Held) {
           key="go"
           label="Proceed"
           hotkey="1"
-          onPress={() => update($, held, x => (x ? { ...x, decision: 'proceed' } : x))}
+          onPress={() => {
+            pressed = 'proceed'
+          }}
         />
         <Button
           key="no"
           label="Cancel"
           hotkey="2"
-          onPress={() => update($, held, x => (x ? { ...x, decision: 'cancel' } : x))}
+          onPress={() => {
+            pressed = 'cancel'
+          }}
         />
       </Box>
     </Box>
@@ -145,24 +151,28 @@ export const register: Register = on => {
       return next(e)
     }
 
+    pressed = null
     await update($, held, () => ({ command, findings, decision: null }) as Held)
-    const opened = await $.ui.open({ id: PANE, title: 'Land Guard', focus: true })
-    void opened
 
     // Waiting inside a `$` call does not use the hook's own time budget.
     let canWait = true
-    while ((await read($, held))?.decision === null && !next.signal.aborted) {
+    let ticks = 0
+    // Give up after 60 s (240 x 250 ms) instead of waiting forever.
+    while (pressed === null && !next.signal.aborted && ticks < 240) {
+      ticks += 1
       const r = await sh($, ['sleep', '0.25'], await $.session.cwd())
       if (r === null) {
         canWait = false
         break
       }
     }
-    const decision = (await read($, held))?.decision ?? null
+    const decision = pressed
     await update($, held, () => null)
-    await $.ui.close({ id: PANE })
 
     if (decision === 'proceed') return next(e)
+    if (decision === null && !next.signal.aborted && canWait) {
+      return { deny: `Land Guard timed out after 60 s without an answer. Findings: ${summary(findings)}. Ask the user in chat before retrying.` }
+    }
     if (!canWait) {
       return {
         deny: `Land Guard could not wait for a keypress here. Findings: ${summary(findings)}. Show them to the user and ask in chat before retrying.`,
@@ -171,14 +181,9 @@ export const register: Register = on => {
     return { deny: `Land Guard held this command and the user pressed Cancel. Findings: ${summary(findings)}.` }
   })
 
-  on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e, next) => {
-    const h = await read($, held)
-    return h ? view($, e, h) : next(e)
-  })
-
-  // Too narrow for a pane: draw the same report above the prompt.
+  // The report sits above the prompt, where the decision is made.
   on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
-    const h = await read($, held)
-    return h && !e.props.hasSurvey ? view($, e, h) : next(e)
+    const cur = await read($, held)
+    return cur && !e.props.hasSurvey ? view($, e, cur) : next(e)
   })
 }
