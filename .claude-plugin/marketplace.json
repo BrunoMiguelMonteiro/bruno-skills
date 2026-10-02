@@ -14,6 +14,8 @@
     { "name": "context-optimizer", "source": "./packages/context-optimizer" },
     { "name": "claude-md-auditor", "source": "./packages/claude-md-auditor" },
     { "name": "research-editor", "source": "./packages/research-editor" },
-    { "name": "obsidian-add-book", "source": "./packages/obsidian-add-book" }
+    { "name": "obsidian-add-book", "source": "./packages/obsidian-add-book" },
+    { "name": "land-guard", "source": "./packages/land-guard" },
+    { "name": "pr-pipeline", "source": "./packages/pr-pipeline" }
   ]
 }

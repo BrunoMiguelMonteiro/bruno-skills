@@ -28,6 +28,8 @@ Run these slash commands inside Claude Code:
 /plugin install claude-md-auditor@bruno-skills
 /plugin install research-editor@bruno-skills
 /plugin install obsidian-add-book@bruno-skills
+/plugin install land-guard@bruno-skills
+/plugin install pr-pipeline@bruno-skills
 ```
 
 ## Skills
@@ -44,6 +46,8 @@ Run these slash commands inside Claude Code:
 | `claude-md-auditor` | PT | Audits CLAUDE.md files for gaps and contradictions |
 | `research-editor` | PT | Research editor for long-form articles |
 | `obsidian-add-book` | PT | Adiciona livros ao vault Obsidian via URL (Goodreads/Wook) |
+| `land-guard` | EN | Mod: trava merge/limpeza (gh pr merge, worktree remove, branch -D) e mostra o que tocam |
+| `pr-pipeline` | EN | Mod: faixa acima do prompt com estado do PR, checks e deploy preview |
 
 ## Update
 

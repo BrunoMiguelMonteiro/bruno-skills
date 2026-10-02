@@ -1,0 +1,9 @@
+{
+  "name": "pr-pipeline",
+  "version": "0.1.0",
+  "description": "A one-line band above the prompt with the current branch's PR: state, checks and deploy preview.",
+  "author": {
+    "name": "Bruno Monteiro"
+  },
+  "types": "./types/index.d.ts"
+}

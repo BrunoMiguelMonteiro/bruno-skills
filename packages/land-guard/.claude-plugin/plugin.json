@@ -1,0 +1,9 @@
+{
+  "name": "land-guard",
+  "version": "0.1.0",
+  "description": "Holds merge and cleanup commands (gh pr merge, worktree remove, branch -D) and shows what they would touch before they run.",
+  "author": {
+    "name": "Bruno Monteiro"
+  },
+  "types": "./types/index.d.ts"
+}
