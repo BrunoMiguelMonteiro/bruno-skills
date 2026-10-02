@@ -2,7 +2,6 @@ export type Finding = { label: string; detail: string; level: 'ok' | 'warn' | 'b
 export type Held = {
   command: string
   findings: Finding[]
-  decision: 'proceed' | 'cancel' | null
 }
 
 declare module 'claude-code' {

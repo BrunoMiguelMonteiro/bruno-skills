@@ -152,7 +152,7 @@ export const register: Register = on => {
     }
 
     pressed = null
-    await update($, held, () => ({ command, findings, decision: null }) as Held)
+    await update($, held, () => ({ command, findings }))
 
     // Waiting inside a `$` call does not use the hook's own time budget.
     let canWait = true
