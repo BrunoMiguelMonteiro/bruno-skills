@@ -25,7 +25,7 @@ Run these slash commands inside Claude Code:
 /plugin install digital-garden-assistant@bruno-skills
 /plugin install context-engineering-assistant@bruno-skills
 /plugin install context-optimizer@bruno-skills
-/plugin install claude-md-auditor@bruno-skills
+/plugin install context-file-auditor@bruno-skills
 /plugin install research-editor@bruno-skills
 /plugin install obsidian-add-book@bruno-skills
 /plugin install land-guard@bruno-skills
@@ -43,7 +43,7 @@ Run these slash commands inside Claude Code:
 | `digital-garden-assistant` | PT | Creates atomic Zettelkasten notes (Obsidian workflow) |
 | `context-engineering-assistant` | PT | Implements custom context engineering systems |
 | `context-optimizer` | PT | Audits and optimizes Claude Code context configuration |
-| `claude-md-auditor` | PT | Audits CLAUDE.md files for gaps and contradictions |
+| `context-file-auditor` | PT | Audits CLAUDE.md files for gaps and contradictions |
 | `research-editor` | PT | Research editor for long-form articles |
 | `obsidian-add-book` | PT | Adiciona livros ao vault Obsidian via URL (Goodreads/Wook) |
 | `land-guard` | EN | Mod: trava merge/limpeza (gh pr merge, worktree remove, branch -D) e mostra o que tocam |

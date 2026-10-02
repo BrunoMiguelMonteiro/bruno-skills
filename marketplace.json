@@ -14,7 +14,7 @@
     { "name": "digital-garden-assistant", "path": "packages/digital-garden-assistant" },
     { "name": "context-engineering-assistant", "path": "packages/context-engineering-assistant" },
     { "name": "context-optimizer", "path": "packages/context-optimizer" },
-    { "name": "claude-md-auditor", "path": "packages/claude-md-auditor" },
+    { "name": "context-file-auditor", "path": "packages/context-file-auditor" },
     { "name": "research-editor", "path": "packages/research-editor" },
     { "name": "obsidian-add-book", "path": "packages/obsidian-add-book" },
     { "name": "figma-audit-setup", "path": "packages/figma-audit-setup" },

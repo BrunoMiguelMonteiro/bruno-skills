@@ -1,5 +1,5 @@
 {
-  "name": "claude-md-auditor",
+  "name": "context-file-auditor",
   "version": "1.0.0",
   "description": "Audita ficheiros CLAUDE.md para detetar gaps, contradições e violações de best practices",
   "author": {

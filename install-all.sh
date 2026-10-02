@@ -13,7 +13,7 @@ SKILLS=(
   digital-garden-assistant
   context-engineering-assistant
   context-optimizer
-  claude-md-auditor
+  context-file-auditor
   research-editor
 )
 
